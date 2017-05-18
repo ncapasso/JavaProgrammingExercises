@@ -1,9 +1,10 @@
 package dreamincode.text;
 
+import utilities.IOUtils;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -14,50 +15,41 @@ import java.util.regex.PatternSyntaxException;
 public class RegexQueryTool {
     public static void main(String[] args) {
         Pattern p = getRegexFromInput();
-        if(p != null){
-            parseStringFromRegex(getStringToTest(), p);
+        if (p != null) {
+            System.out.println("Enter any number of sentences. Empty lines exit. ");
+            IOUtils.getInput()
+                    .forEach(s -> System.out.println(parseStringsFromRegex(s, p)));
         }
     }
 
-    private static Pattern getRegexFromInput(){
+    private static Pattern getRegexFromInput() {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         System.out.println("Enter a regex expression.");
         try {
             String brReturn = br.readLine();
-            if(brReturn != null && !brReturn.isEmpty()) {
-                return Pattern.compile(br.readLine());
-            }
+            return Pattern.compile(brReturn);
         } catch (IOException e) {
             e.printStackTrace();
-        } catch(PatternSyntaxException p){
+        } catch (PatternSyntaxException p) {
             System.err.println("Invalid regex pattern. Please try again.\nEnter a blank line to exit.");
             getRegexFromInput();
         }
         return null;
     }
 
-    private static String getStringToTest(){
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("Enter a sentence to test.");
-        try {
-            return br.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+    private static String parseStringsFromRegex(String input, Pattern regexPattern) {
+        Matcher m;
+        String retString = "";
 
-
-    private static ArrayList<String> parseStringFromRegex(String input, Pattern regexPattern){
-        int count = 0;
-        if(!input.isEmpty() && regexPattern != null){
-            Matcher m = regexPattern.matcher(input);
-            while(m.find()){
-                count++;
-                System.out.println("Number of matched entries: " + count);
+        String[] temp = input.split("\\p{Blank}");
+        for (String s : temp) {
+            m = regexPattern.matcher(s);
+            if (m.find()) {
+                retString = retString.concat("\u001B[31m" + s + "\u001B[0m" + " ");
+            } else {
+                retString = retString.concat(s + " ");
             }
-
         }
-        return null;
+        return retString;
     }
 }
