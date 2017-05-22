@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class PigLatin {
     public static void main(String[] args) {
         System.out.println("Please enter a phrase to pig-latinize. Empty input exits.");
-        pigLatinize(IOUtils.getInput());
+        pigLatinize(IOUtils.getInput(System.in));
     }
 
     private static void pigLatinize(ArrayList<String> strings){

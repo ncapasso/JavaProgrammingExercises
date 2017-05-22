@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class CheckIfPalendrome {
     public static void main(String[] args) {
         System.out.println("Please enter any number of words to check if it's a palindrome. Empty input exits.");
-        checkIfPalindrome(IOUtils.getInput());
+        checkIfPalindrome(IOUtils.getInput(System.in));
     }
 
 

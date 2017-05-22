@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class StringReverse {
     public static void main(String[] args) {
         System.out.println("Please enter any number of words to reverse. Empty input exits.");
-        ArrayList<String> inputStrings = IOUtils.getInput();
+        ArrayList<String> inputStrings = IOUtils.getInput(System.in);
         inputStrings.forEach(s -> System.out.println(reverse(s)));
 //        inputStrings.forEach(StringReverse::foo); //good for many statements/complex logic. Style choice as well.
 //        inputStrings.forEach(new Bar()); //if you want to create a new class

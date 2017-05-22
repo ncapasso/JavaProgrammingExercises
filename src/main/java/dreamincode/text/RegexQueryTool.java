@@ -4,6 +4,7 @@ import utilities.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,16 +15,16 @@ import java.util.regex.PatternSyntaxException;
  */
 public class RegexQueryTool {
     public static void main(String[] args) {
-        Pattern p = getRegexFromInput();
+        Pattern p = getRegexFromInput(System.in);
         if (p != null) {
             System.out.println("Enter any number of sentences. Empty lines exit. ");
-            IOUtils.getInput()
+            IOUtils.getInput(System.in)
                     .forEach(s -> System.out.println(parseStringsFromRegex(s, p)));
         }
     }
 
-    private static Pattern getRegexFromInput() {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private static Pattern getRegexFromInput(InputStream is) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(is));
         System.out.println("Enter a regex expression.");
         try {
             String brReturn = br.readLine();
@@ -32,7 +33,7 @@ public class RegexQueryTool {
             e.printStackTrace();
         } catch (PatternSyntaxException p) {
             System.err.println("Invalid regex pattern. Please try again.\nEnter a blank line to exit.");
-            getRegexFromInput();
+            getRegexFromInput(is);
         }
         return null;
     }

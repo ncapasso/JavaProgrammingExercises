@@ -14,7 +14,7 @@ public class CountVowels {
         CountVowels vow = new CountVowels();
         System.out.println("Please enter any number of words to count the vowels. Empty input exits.");
         vow.printMap(
-                vow.countVowelsAndConsonants(IOUtils.getInput())
+                vow.countVowelsAndConsonants(IOUtils.getInput(System.in))
         );
     }
 
